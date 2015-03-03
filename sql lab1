@@ -1,0 +1,49 @@
+a)
+select lastName,firstName from Students; 
+b)
+select lastName,firstName from Students order by lastName,firstName; 
+c)
+select * from Students where pNbr like "85%"; 
+d)
+select * from Students where mod( substring(pNbr,10,1) ,2) = 0;
+e)
+select count(*) from Students;
+f)
+select * from Courses where courseCode like "FMA%";
+g)
+select * from Courses where credits > 7.5;
+h)
+select count(*) from Courses where level = 'G1';
+i)
+select count(*) from Courses where level = 'G2';
+j)
+select count(*) from Courses where level = 'A';
+k)
+select courseCode from TakenCourses,Students where Students.pNbr = '910101-1234' and Students.pNbr=TakenCourses.pNbr;
+l)
+select courseName,credits from TakenCourses,Students,Courses where Students.pNbr = '910101-1234' and Students.pNbr=TakenCourses.pNbr and TakenCourses.courseCode = Courses.courseCode;
+m1)
+select sum(credits) from TakenCourses,Students,Courses where Students.pNbr = '910101-1234' and Students.pNbr=TakenCourses.pNbr and TakenCourses.courseCode = Courses.courseCode;
+m2)
+select sum(grade)/count(TakenCourses.courseCode) from TakenCourses,Students,Courses where Students.pNbr = '910101-1234' and Students.pNbr=TakenCourses.pNbr and TakenCourses.courseCode = Courses.courseCode;
+
+m3)
+select sum(credits) from TakenCourses,Students,Courses where firstName = 'Eva' and lastName = 'Alm' and Students.pNbr=TakenCourses.pNbr and TakenCourses.courseCode = Courses.courseCode;
+
+m4)
+select sum(grade)/count(TakenCourses.courseCode) from TakenCourses,Students,Courses where firstName = 'Eva' and lastName = 'Alm' and Students.pNbr=TakenCourses.pNbr and TakenCourses.courseCode = Courses.courseCode;
+
+n)  
+select firstName,lastName from Students where pNbr not in (select pNbr from TakenCourses);
+ 
+
+o)
+create view avgGrade as select Students.pNbr, avg(grade) as medel from Students,TakenCourses where Students.pNbr = TakenCourses.pNbr group by pNbr ;
+select * from avgGrade where medel in (select max(medel) from avgGrade )
+
+p)
+select Students.pNbr ,coalesce(sum(credits),0) from TakenCourses natural join Courses right outer join Students on TakenCourses.pNbr = Students.pNbr group by Students.pNbr
+
+q)
+select distinct Old.firstName,Old.lastName, Old.pNbr from Students Old, Students New where Old.firstName = New.firstName and Old.lastName = New.LastName and Old.pNbr <> New.pNbr;
+
