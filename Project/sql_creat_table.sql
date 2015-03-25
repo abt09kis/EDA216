@@ -8,9 +8,9 @@ drop table if exists Cookies;
 drop table if exists Pallets;
 drop table if exists Orders;
 drop table if exists CustomersOrders;
-drop table if exists Customer;
+drop table if exists Customers;
 drop table if exists NbrOfCookiePallets;
-drop table if exists PalletsInOrder;
+drop table if exists PalletsInOrders;
 set foreign_key_checks = 1;
 -- Create the tables.
 create table Ingredients (
@@ -40,6 +40,12 @@ delivered varchar(5) not null,
 primary key(palletNbr),
 foreign key(cookieName) references Cookies(cookieName)
 );
+create table Customers  (
+customerId integer auto_increment,
+adress varchar(30) not null,
+customerName varchar(30) not null,
+primary key(customerID)
+);
 create table Orders  (
 orderNbr integer auto_increment,
 nbrPallet integer not null,
@@ -54,16 +60,13 @@ palletNbr integer not null,
 foreign key(orderNbr) references Orders(orderNbr),
 foreign key(palletNbr) references Pallets(palletNbr)
 );
-create table Customers  (
-customerId integer auto_increment,
-adress varchar(30) not null,
-customerName varchar(30) not null,
-primary key(orderNbr)
-);
+
 create table CustomerOrders  (
 customerId integer not null,
 orderNbr integer not null,
-primary key(orderNbr)
+primary key(customerID,orderNbr),
+foreign key(orderNbr) references Orders(orderNbr),
+foreign key(customerId) references Customers(customerId)
 );
 --Insert Data into the tables.
 --Ingredients
