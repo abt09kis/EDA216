@@ -1,6 +1,6 @@
 <?php
 	require_once('database.inc.php');
-	require_once("mysql_connect_data.inc.php");
+	require_once("mysql_connect_data.inc");
 	$db = new Database($host, $userName, $password, $database);
 	$db->openConnection();
 	if (!$db->isConnected()) {
@@ -16,7 +16,7 @@
 	<header> <title>Production </title></header>
 	<body>
 		<h1>Production</h1>
-		<p>Click on of the buttons to preforma a task</p>
+		<p>Click one of the buttons to preform a task</p>
 		<h2>find a pallet</h2>
 		<p>To find a pallet click the button find a pallet</p>
 		<form method="get" action="searchpallet1.php">

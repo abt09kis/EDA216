@@ -4,7 +4,7 @@
 	session_start();
 	$db = $_SESSION['db'];
 	$db->openConnection();
-	$result = $db->getPalletInfo($_POST["palletId"])
+	#$result = $db->getPalletInfo($_POST["palletId"])
 	$db->closeConnection();
 ?>
 <html>

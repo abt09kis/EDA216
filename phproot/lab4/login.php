@@ -20,5 +20,5 @@
 	session_start();
 	$_SESSION['db'] = $db;
 	$_SESSION['userId'] = $userId;
-	header("Location: booking1.php");
+	header("Location: createpallet.php");
 ?>
