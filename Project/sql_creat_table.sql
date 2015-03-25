@@ -11,7 +11,7 @@ drop table if exists CustomersOrders;
 drop table if exists Customers;
 drop table if exists NbrOfCookiePallets;
 drop table if exists PalletsInOrders;
-set foreign_key_checks = 1;
+set foreign_key_checks = 0;
 -- Create the tables.
 create table Ingredients (
 ingredientName varchar(30) not null,
