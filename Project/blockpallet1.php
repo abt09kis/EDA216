@@ -16,7 +16,7 @@
 				if($result){
 					print "The pallet with the id:".$_POST["palletId"];
 				}else{
-					print "The Pallet with the id:".$_POST["palletId"]."do not exists try an other number";
+					print "The Pallet with the id:".$_POST["palletId"]."<br>do not exists try an other number";
 				}
 			?>
 		<h2>Block another pallet</h2>

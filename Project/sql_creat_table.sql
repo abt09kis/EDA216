@@ -34,7 +34,7 @@ foreign key(ingredientName) references Ingredients(ingredientName)
 create table Pallets (
 palletNbr integer auto_increment,
 cookieName varchar(30) not null,
-prodTime date not null,
+prodTime datetime not null,
 blocked varchar(5) not null,
 delivered varchar(5) not null,
 primary key(palletNbr),

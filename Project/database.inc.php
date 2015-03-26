@@ -97,13 +97,45 @@ class Database {
 	public function getIngredientsCookie($cookieName){
 		$stmt = "Select ingredientName,quantity from Recipes where cookieName = ? " ;
 		$result = $this->executeQuery($stmt, array($cookieName));
-		print "size of return".count($result).$cookieName;
+	
 		for($i = 0; $i<count($result); ++$i){
-			$ingredients[$result[$i][0]] = $result[$i][1];
+			$ingredients[$result[$i][0]] = intval($result[$i][1]);
 		}
 		return $ingredients;
 		
 	
+	}
+	
+	public function useCookieIngrediants($cookieName){
+			$ingredients = $this->getIngredientsCookie($cookieName);
+			$sql = "update Ingredients set quantity = quantity-(?*54) where ingredientName = ? and quantity > 0";
+			$this->conn->beginTransaction();
+			foreach($ingredients as $ingredient => $quant){
+				$affectedRows = $this->executeUpdate($sql,array($quant,$ingredient));
+				if($affectedRows  !== 1 ){
+					$this->conn->rollback();
+					return false;
+				}
+			}
+			$this->conn->commit();
+			return true;
+			
+	
+	
+	}
+
+	public function createPallet($cookieName){
+		$sql = "insert into Pallets (palletNbr,cookieName,prodTime,blocked,delivered) VALUES (palletNbr,?,NOW(),?,?)";
+		$this -> executeUpdate($sql,array($cookieName,"false","false"));
+		$palletId = $this->conn->lastInsertId();
+		return $palletId;
+		
+	}
+	
+	public function getPalletInfo($palletId){
+		$sql = "select * from Pallets where palletNbr = ? ";
+		$result=$this->executeQuery($sql, array($palletId));
+		return $result[0];   
 	}
 	
 	

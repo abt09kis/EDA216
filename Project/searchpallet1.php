@@ -4,17 +4,30 @@
 	session_start();
 	$db = $_SESSION['db'];
 	$db->openConnection();
-	#$result = $db->getPalletInfo($_POST["palletId"])
+	$result = $db->getPalletInfo($_POST["palletId"]);
 	$db->closeConnection();
 ?>
 <html>
 	<header><title>Search pallet</title></header>
 	<body>
 		<h1>Search pallet</h1>
-		<p>This page gives information about the searched pallet</p>
+		<?php
+			if($result === null){
+				echo "<p>No pallet found with that id:".$_POST["palletId"]."</p>";
+			}else{
+				echo "<p>This page gives information about the searched pallet</p>";
+				echo "<p>palletNbr: ".$result["palletNbr"]."</p>";
+				echo "<p>cookieName: ".$result["cookieName"]."</p>";
+				echo "<p>prodTime: ".$result["prodTime"]."</p>";
+				echo "<p>blocked: ".$result["blocked"]."</p>";
+				echo "<p>delivered: ".$result["delivered"]."</p>";
+			}
+		
+		?>
+		
 		<h2>Search a new pallet</h2>
 		<p>To search a new pallet enter it id in textbox and click "Search pallet"</p>
-		<form method="get" action="searchpallet1.php">
+		<form method="post" action="searchpallet1.php">
 			<input type="text" name="palletId" ><br>
 			<input type="submit" value ="Search pallet">
 		</form >
