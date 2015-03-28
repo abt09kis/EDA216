@@ -83,7 +83,11 @@ class Database {
 		return $result;
 	}
 
-	
+	public function getPalletsInfoByTime($startTime, $endTime){
+		$stmt = "Select * from Pallets where prodTime >= ? and prodTime <= ? ";
+		$result = $this->executeQuery($stmt,array($startTime,$endTime));
+		return $result;
+	}
 	public function getCookieName(){
 		$stmt = "Select cookieName from Cookies";
 		$result =$this->executeQuery($stmt);

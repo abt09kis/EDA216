@@ -19,8 +19,7 @@
 		<p>Click one of the buttons to preform a task</p>
 		<h2>find a pallet</h2>
 		<p>To find a pallet click the button find a pallet</p>
-		<form method="post" action="searchpallet1.php">
-			<input type="text" name="palletId" > <br>
+		<form method="get" action="searchpallet1.php">
 			<input type="submit" value="find a pallet">
 		</form>
 		<h2>Block pallet</h2>
