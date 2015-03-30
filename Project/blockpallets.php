@@ -6,12 +6,24 @@
 	$db->openConnection();
 	#$result = $db->getBlockPallet($_POST["palletId"])
 	$cookieName = $db->getCookieName();
+	$nbrBlocked = $db->blockPallets($_POST["cookieName"],$_POST["startTime"],$_POST["endTime"]);
 	$db->closeConnection();
 ?>
 <html>
-	<header><title>Search pallet</title></header>
+	<header><title>Blocked pallets</title></header>
 	<body>
-		<h1>Block pallet</h1>
+		<h1>Blocked pallets</h1>
+		<h2>Number of blocked pallets </h2>
+		<?php
+			if($nbrBlocked > 0 ){ 
+				echo $nbrBlocked." pallets affecetd by the input";  
+			}else if($_POST["startTime"]>$_POST["endTime"]){
+				echo "Start time is after end time"; 
+			}else{
+				echo "No pallets affected";	
+			}
+		?>
+		<h2>Block other pallet</h2>
 		<p>Block pallets containing a cookie type during a time interval</p>
 		<form method="post" action="blockpallets.php">
 			<select name="cookieName" size=10 required>
@@ -34,7 +46,7 @@
 			End time form <br>
 			yyyy-mm-dd hh:mm:ss <br>
 			<input type="input" name="endTime" required><br>
-			<input type="submit" value ="Block pallets">
+			<input type="submit" value ="Search pallet">
 		</form >
 		
 		<h2>Return to the startpage</h2>

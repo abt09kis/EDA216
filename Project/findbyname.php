@@ -4,34 +4,40 @@
 	session_start();
 	$db = $_SESSION['db'];
 	$db->openConnection();
-	$result = $db->getPalletInfo($_POST["palletId"]);
+	$result = $db->findPalletsByName($_POST["cookieName"]);
 	$cookieName = $db->getCookieName();
 	$db->closeConnection();
+	
 ?>
+
 <html>
-	<header><title>Search pallet</title></header>
+	<header><title>Search pallet by cookie name</title></header>
 	<body>
-		<h1>Search pallet</h1>
+		<h1>Search pallet by cookie name </h1>
 		
-		<h2>Search a pallet with Id</h2>
-		<p>To search a pallet enter it's id in textbox and click "Search pallet"</p>
-		<form method="post" action="searchpalletid.php">
-			<input type="text" name="palletId" ><br>
-			<input type="submit" value ="Search pallet">
-		</form >
+		<h2>Found pallets </h2>
+		<?php
+			if(count($result) > 0){
+				echo "<table>";
+	  			echo "<tr>";
+				echo	"<th>palletNbr</th>";
+				echo	"<th>cookieName</th>";
+				echo	"<th>prodTime</th>";
+				echo 	"<th>blocked</th>";
+				echo	"<th>delivered</th>";
+	  			echo "</tr>";
+	  			for($i = 0; $i<count($result); ++$i){
+					echo "<tr>";
+					echo "<td>".$result[$i]["palletNbr"]."</td><td>".$result[$i]["cookieName"]."</td><td>".$result[$i]["prodTime"]."</td><td>".$result[$i]["blocked"]."</td><td>".$result[$i]["delivered"]."</td>";			
+					echo "</tr>";
+				}		
+			
+			}else{
+				echo "No pallets with cookies by the name: ".$_POST["cookieName"];
+			}
+		?>
 		
-		<h2>Search a pallets in between different times</h2>
-		<p>To search a new pallet enter it id in textbox and click "Search pallet"</p>
-		<form method="post" action="searchpalletbydate.php">
-			Start time form <br>
-			yyyy-mm-dd hh:mm:ss <br>
-			<input type="input" name="startTime" required><br>
-			End time form <br>
-			yyyy-mm-dd hh:mm:ss <br>
-			<input type="input" name="endTime" required><br>
-			<input type="submit" value ="Search pallet">
-		</form >
-		
+		</table>
 		<h2>Search Pallet by cookie name</h2>
 		<p>
 			Choose a cookie name to find what pallets that contains that cookie  

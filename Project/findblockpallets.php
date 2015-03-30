@@ -1,3 +1,4 @@
+
 <?php
 	require_once('database.inc.php');
 	
@@ -6,15 +7,15 @@
 	$db->openConnection();
 	#$result = $db->getBlockPallet($_POST["palletId"])
 	$cookieName = $db->getCookieName();
+	$nbrBlocked = $db->blockPallets($_POST["cookieName"],$_POST["startTime"],$_POST["endTime"]);
 	$db->closeConnection();
 ?>
 <html>
-	<header><title>Search pallet</title></header>
+	<header><title>Blocked pallets</title></header>
 	<body>
-		<h1>Block pallet</h1>
-		<p>Block pallets containing a cookie type during a time interval</p>
-		<form method="post" action="blockpallets.php">
-			<select name="cookieName" size=10 required>
+		<h2>Finde Blocked by name<h2>
+		<form method="post" action="findeblockedpallets2.php">
+				<select name="cookieName" size=10 required>
 				<?php
 					$first = true;
 					foreach ($cookieName as $name) {
@@ -27,14 +28,9 @@
 						print $name;
 					}		
 				?>
-			</select><P>
-			Start time form <br>
-			yyyy-mm-dd hh:mm:ss <br>
-			<input type="input" name="startTime" required><br>
-			End time form <br>
-			yyyy-mm-dd hh:mm:ss <br>
-			<input type="input" name="endTime" required><br>
-			<input type="submit" value ="Block pallets">
+			</select>
+			<p>
+			<input type="submit" value ="Find blocked pallets">
 		</form >
 		
 		<h2>Return to the startpage</h2>

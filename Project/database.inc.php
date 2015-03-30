@@ -141,6 +141,25 @@ class Database {
 		$result=$this->executeQuery($sql, array($palletId));
 		return $result[0];   
 	}
+	public function findPalletsByName($cookieName){
+		$sql = "select * from Pallets where cookieName = ? order by prodTime";
+		$result = $this->executeQuery($sql,array($cookieName)); 
+		return $result;
+	
+	}
+	public function blockPallets($cookieName,$startTime,$endTime){
+		if($startTime>$endTime){
+		return 0;
+		}
+		$sql = "update Pallets set blocked = ? where cookieName = ? and prodTime >= ? and prodTime <= ?";
+		return $this->executeUpdate($sql,array("true",$cookieName,$startTime,$endTime));
+	
+	}
+	public function findBlockedPallets($cookieName){
+		$sql = "select * from Pallets where cookieName = ? and blocked = ? ";
+		return $this->executeQuery($sql,array($cookieName,"true"));
+	
+	}
 	
 	
 	/**
